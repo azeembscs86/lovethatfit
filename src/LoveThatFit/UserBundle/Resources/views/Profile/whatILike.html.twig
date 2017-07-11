@@ -1,0 +1,44 @@
+{% extends 'LoveThatFitUserBundle:Profile:baseProfile.html.twig' %}
+{% block profile_heading %}
+<h1>What I Like</h1>
+{% endblock %}
+{% block profile_section %} 
+<div>
+    {% if app.session.hasFlash('warning') %}
+       <div class="alert alert-error">        
+        {{ app.session.flash('warning') }}
+        </div>   
+{% endif %}      
+{% if app.session.hasFlash('success') %}
+  <div class="success_alert">    
+    {{ app.session.flash('success') }}
+   </div>
+   
+{% endif %}
+{%if(count_question>0)%} 
+<form action="{{ path('user_profile_what_i_like_user_survey') }}" method="post"{{form_enctype(form)}}>
+{% for item in data %}  
+          <div class="pf_box">           
+          <div class="pf_question">
+           {{item.question}}<br>
+             
+           </div>
+           {% for a in item.answers %}
+        <input type="radio" name="{{item.id}}" value="{{a.id}}"
+               {%for s in a.survey%}
+                 {%if(s.survey and userid==s.user)%}
+                 checked="checked"
+                 {%endif%}
+                  {%endfor%}>        
+        
+        <span class="pf_answer">{{a.answer}}</span><br>
+                {%endfor%}
+            </div>        
+        {%endfor%}
+        <div class="clr_bth"></div> 
+        <input type="submit" value="Submit">
+ </form>    
+{%else%}
+    <div>No Question Found</div>
+{%endif%}
+{% endblock %}

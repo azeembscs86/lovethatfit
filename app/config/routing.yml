@@ -1,0 +1,28 @@
+love_that_fit_web_service:
+    resource: "@LoveThatFitWebServiceBundle/Resources/config/routing.yml"
+    prefix:   /
+
+love_that_fit_user:
+    resource: "@LoveThatFitUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+love_that_fit_site:
+    resource: "@LoveThatFitSiteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+love_that_fit_admin:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
+
+acme_hello_routes:
+    resource: "@AcmeHelloBundle/Resources/config/routing.yml"
+    prefix:   /
+
+acme_store_routes:
+    resource: "@AcmeStoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+_welcome:
+    pattern:  /
+    defaults: { _controller: LoveThatFitUserBundle:Registration:registration}

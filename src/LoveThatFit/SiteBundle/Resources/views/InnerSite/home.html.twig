@@ -1,0 +1,48 @@
+{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
+
+{% block left_navigation %}
+<!--/this is left navigation you can remove this following include line and add your own navigation-->
+    {% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation.html.twig'%}
+
+{% endblock %}
+
+{% block left_col_btm %}
+{% endblock %}
+
+
+
+{% block fitting_room %}
+<div id="new_home_bg">
+
+<div id="boxes_wrapper">
+
+    <div class="home_box">
+        <h1>New<br><br> Arrivals</h1>
+        <div class="slid"><img src="{{ asset('bundles/lovethatfit/site/images/new_arrival_img.png') }}"></div>
+        <div class="more_lnk"></div>
+    </div>
+    
+    <div class="home_box">
+        <h1>FRIENDS<br><br>FAVOURITES</h1>
+        <div class="slid"><img src="{{ asset('bundles/lovethatfit/site/images/friends_fav.png') }}"></div>
+        <div class="more_lnk"></div>
+    </div>
+    
+    <div class="home_box">
+        <h1>CURRENT<br><br>TRIED ON</h1>
+        <div class="slid"><img src="{{ asset('bundles/lovethatfit/site/images/current_tried_img.png') }}"></div>
+        <div class="more_lnk"></div>
+    </div>
+    
+    <div class="home_box">
+        <h1>LTF<br>RECOMMENDATIONS</h1>
+        <div class="slid"><img src="{{ asset('bundles/lovethatfit/site/images/ltf_recomm.png') }}"></div>
+        <div class="more_lnk"></div>
+    </div>
+   
+
+</div>
+</div>
+
+
+{% endblock %} 

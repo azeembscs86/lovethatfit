@@ -1,0 +1,194 @@
+<!--/ this templete should have the objects products, page_number, limit & row_count -->
+<ul class="prod_wrapper">
+
+ 
+    <li class="selected_pro hide">
+        <div class="prod_node">
+            <span></span>
+            <div class="featured_box">                
+                <div class="featured_content_selected">
+                    <h3 class="selected">Green dress</h3>
+                    <div style="clear:both;"></div>
+                    <div class="featured_sizes">
+                        <select name="cloth_size">
+                            <option>XL-42"</option>
+                        </select>
+                            <select name="cloth_quantity">
+                            <option>1</option>
+                        </select>     
+                            
+                    </div>
+                     <div class="pro_color">
+                       
+                        <span>                         
+                            <input type="radio" value="XS" name="Radio" id="color1">
+                            <label class="red" for="color1"></label>
+                             <input type="radio" value="S" name="Radio" id="color2">
+                            <label class="green" for="color2"></label>
+                             <input type="radio" value="M" name="Radio" id="color3">
+                            <label class="blue" for="color3"></label>
+                             
+                        </span>
+                    </div>
+                    
+                     <div id="add_cart"><a href="#">Add to Cart</a></div>
+                     <div class="product_price">$16.00</div>
+                    
+                </div>
+                    <div class="featured_img">
+                    <img width="63" height="108" src="/webapp/web/uploads/ltf/products/blue_dress_2.png" class="prod_dress ui-draggable">
+                    <span id="fitting_feedback_26" class="prod_fitting_details"><a href="/webapp/web/app_dev.php/ajax/fitting_feedback_list/26">feedback</a></span>
+                    
+                </div>
+                    
+                  
+                    
+                 <div style="clear:both;"></div>
+            <div id="pro_more_det"><!--START PRODUCT MORE DETAIL-->
+            
+            
+
+            <div class="sectionbox"><!-- START section -->
+            <ul class="tabs">
+                        <li class="current">Description</li>
+                        <li>At a Glance</li>
+                        <li>Designer</li>		
+                    </ul>
+            <div class="box visible">
+                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.</p>		
+                    </div>
+            <div class="box">
+                        <p>The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex!</p>		
+                    </div>
+            <div class="box">
+                        <p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin.</p>		
+                    </div>
+            </div><!-- END section -->
+
+            </div><!--END PRODUCT MORE DETAIL-->   
+                    
+             <span id="base_url" style="display:none;">{{app.request.getScheme~  '://' ~ app.request.getHttpHost~ app.request.getBasePath}}</span>        
+                    
+                <span></span>
+                <!--/prod_node--></div>
+    </div></li>
+    
+    
+{% if(row_count>0)%}    
+{% for p in products %}
+    <li>
+        
+        {% if(p.getRandomItem and p.getRandomItem!=null)%}
+            <span id="apply_image_url" style="display:none;">{{asset(p.getRandomItem.WebPath)}}
+        </span>    
+        {%endif%}    
+
+        <div class="prod_node">
+            <span></span>
+            <span id="{{'product_'~p.id}}" style="display:none;">{{path('ajax_product_detail', {'id':p.id})}}</span>
+            <div class="featured_box{{p.id}} fbox">
+                <div class="pos_relative"><div class="transp_list hide"><div class="uploading_list">&nbsp;</div></div></div>
+                <div class="nrm_prod_data{{p.id}} default_item">
+                    
+                <div class="featured_content">
+                    <h3>{{p.name}}</h3>
+                    <!--<p>{{p.brand.name}} <br/>
+                        All sizes Available<br />
+                        All colors Available</p>
+                    <div class="pro_price">$29.99 - $69.99</div>-->
+                </div>
+                            
+                            
+                            
+               <div> 
+                            
+                   <div class="featured_img" style="float:left; margin-left: 70px;">                    
+                    {%if p.displayProductColor%}                    
+                    <img id="{{p.id}}" class="prod_{{p.clothingType.target|lower}}" src="{{asset(p.displayProductColor.webPath)}}"/>
+                    <a class="apply_img hide" href="{{asset(p.getRandomItem.WebPath)}}">{{asset(p.getRandomItem.WebPath)}}</a>
+                      <span class="prod_fitting_details" id="fitting_feedback_{{p.id}}"><a href='{{path("ajax_fitting_feedback_list", {"product_item_id" : p.getRandomItem.id})}}'>feedback</a></span>
+                    {% if(p.getRandomItem and p.getRandomItem!=null)%}
+                        <a class="apply_img hide" href="{{asset(p.getRandomItem.WebPath)}}">{{asset(p.getRandomItem.WebPath)}}</a>    
+                    {%endif%}
+                    {%endif%} 
+                </div>
+                    
+                   <div class="pro_detail" style="float:right;"><a class="prod_details_arrow" href="javascript:void(0);"><img src="{{ asset('bundles/lovethatfit/site/images/slider_detail_arrow.png') }}" width="58" height="39"></a></div>     
+                    
+               </div>   
+                            
+                            
+                            
+                            
+                            
+                            
+                    
+                  
+                      
+                <span></span>
+                <!--/nrm_prod--></div>
+            <div class="dynamic_data{{p.id}}"></div>
+               
+            <!--Featured box--></div>
+    </li>            
+                {% endfor %}
+                {%else%}
+               
+    <li>
+        <div class="prod_node">
+            <span></span>
+            <div class="featured_box">                
+                
+                              <div class="featured_content" style="background: #f3f3f3; height: 500px;">
+                    <h3 style="font-size:0.95em; padding-top: 220px; height: auto; width: 160px; margin:0 auto;">
+Products are currently<br>  not available.</h3>                    
+
+                
+                
+                <div class="featured_img">                    
+                    
+                </div>
+                   
+                  
+                      
+                <span></span>
+                <!--/prod_node--></div>
+    </li> 
+    
+    
+    
+                {%endif%}
+
+</ul>
+
+<script>
+    
+$(".prod_details_arrow").click(
+    function(){
+        
+        var curr_prod_id = $(this).parent().parent().find(".featured_img img").attr("id");
+        base_url=$('#product_'+curr_prod_id ).text();
+        
+        $('.featured_box'+curr_prod_id+' .transp_list').removeClass("hide").addClass("disp_blk");
+        $.ajax({
+            url:  base_url,
+           
+          
+            success: function (data) {
+            $('.featured_box'+curr_prod_id+' .transp_list').removeClass("disp_blk").addClass("hide");
+            $('.dynamic_data'+curr_prod_id ).html(data).addClass("disp_blk");
+            $('.nrm_prod_data'+curr_prod_id ).addClass("hide");
+            set_drag_drop_ele();
+            
+            //var tesss = $(this).parent().parent().parent().find(".featured_box").attr("class");
+            
+            //alert(tesss);
+            }
+        });       
+        
+    }
+);
+    
+</script>
+
+

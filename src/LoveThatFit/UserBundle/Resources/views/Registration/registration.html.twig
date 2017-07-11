@@ -1,0 +1,175 @@
+{% extends 'LoveThatFitUserBundle::base_reg.html.twig' %}
+
+{% form_theme form 'LoveThatFitUserBundle:FormTheme:fields.html.twig' %}
+{% block action_block_content %}
+<section class="reg_blk">
+    <div class="action_cnt">
+        <div class="steps step_1">  
+            <h2>Let's Get Started!</h2>
+            <p>Try Clothes On. See Look, Fit &amp; Size. Social.</p>
+            <div class="log_wrapper">
+                <div class="login_tab">
+                    <a href="#" class="active" id="reg_btn">Register</a>
+                    <a href="#" id="lg_btn">Login</a>
+                </div>
+                <div class="clr_bth"></div>
+
+
+                <div class="login_reg_box" id="reg_wrap">
+                    <form id="registration" action="{{ path('registration_user_create')}}" method="post" {{ form_enctype(form) }}>
+                        <div class="form_vld_error">
+{{ form_errors(form, { 'attr': {'class': 'error_cls'} }) }}
+                            </div>
+
+                            <div class="frm_ele">
+                       {{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
+                       {{ form_errors(form.email) }}
+                                </div>
+
+                                <div class="frm_ele">
+                        {{ form_widget(form.password.password, { 'attr': {'placeholder': 'Password'} }) }}
+                                    </div>
+
+                                    <div class="frm_ele">
+                        {{ form_widget(form.password.confirm, { 'attr': {'placeholder': 'Confirm Password'} }) }}   
+                        {{ form_errors(form.password.password) }}
+                        {{ form_errors(form.password.confirm) }}
+                                        </div>
+                                        <div class="frm_ele">
+                        {{ form_widget(form.zipcode, { 'attr': {'placeholder': 'Zip Code'} }) }}   
+                        {{ form_errors(form.zipcode) }}
+                                            </div>
+
+                                            <div style="float:left; margin-left:20px; margin-bottom: 10px;">            
+                                                <div class="frm_ele radio_buts">
+
+                                                    <div id="gender_label">Gender</div>
+                            {{ form_widget(form.gender) }} 
+
+                            {{ form_errors(form.gender) }}
+                                                </div>
+                                            </div>
+
+                                            <div style="clear:both;"></div>
+                    {{ form_rest(form) }}
+
+                                            <input class="reg_next_step" type="submit" value="Register" />
+
+
+                                            <div class="login_section">
+                                                <span>Already Registered?</span>
+                                                <a href="{{path('login')}}">LOGIN NOW!</a>
+                                            </div>
+                                        </form>
+                                    </div>
+
+ <!--/Login form start-->
+ <div class="login_reg_box" id="login_wrap" style="display: none;">
+
+        <script>
+function formValidates()
+{
+    var username=document.getElementById('email').value;
+    var password=document.getElementById('password').value;
+    if((username=='' || username=='email') && (password=='' || password=='password'))
+        {
+           document.getElementById('error_content1').style.display="block";
+           return false;
+        }else
+            {
+                return true;
+            }
+}
+    
+</script>                                
+                                        
+                                        <form action="{{ path('login_check') }}" method="post" class="form" name="loginform" id="loginform" onsubmit="return formValidates()">
+                                            <div class="frm_ele">            
+                                                <input type="text" id="email" name="_username" placeholder="Email" />
+                                            </div>
+                                            <div class="frm_ele">
+                                                <input type="password" id="password" name="_password" placeholder="Password" />
+                                                <div class="login_error" >
+                                                    <div id="error_content1" style="display:none;color: #DD1144;font-size: 0.8em;
+                                                         text-align:left">
+                                                             Enter Valid User name and password
+                                                         </div>
+                                                    </div>
+                                                    {% if error is defined and error%}
+                                                    <div class="login_error" >          
+                                                        <div id="error_content">
+                                                        {{ error.message  | replace({"Bad credentials": "Invalid Log-in credentials"})}}
+                                                            </div>
+
+                                                        </div>
+                                                    {% endif %}
+                                                        <input type="hidden" name="_target_path" value="/inner_site/index" />
+                                                    </div>
+
+                                                    <div class="frm_ele">
+                                                        <input id="sbmt_bnt" type="submit" value="Login" class="reg_next_step" />
+                                                    </div>
+                                                </form>
+
+
+                                                <ul class="row with_sep">
+                                                    <li><a href="{{path('forgot_password_form')}}">forgot</a></li>
+
+                                                    <li><a href="{{path('registration')}}">create</a></li>
+                                                </ul>
+<!--/Login form End-->
+                                            </div>
+                                        </div>
+
+
+
+                                        <!--/.sttp_1--></div>
+                                    <!--/.action_cnt--></div>
+                                <!--/.action_blk--></section>
+<script>
+    $(document).ready(function(){
+       
+       $('#lg_btn').click(function(){
+            $('#login_wrap').show();
+            $('#reg_wrap').hide();
+            $('.login_tab a').removeClass("active");
+            $('#lg_btn').addClass("active");
+       })
+       
+       $('#reg_btn').click(function(){
+            $('#reg_wrap').show();
+            $('#login_wrap').hide();
+             $('#lg_btn').removeClass("active");
+            $('#reg_btn').addClass("active");
+       })
+    
+    })
+    
+</script>
+
+{% endblock %}
+{% block feed_block %}
+<div class="twitter_wrap">
+
+    <div class="tt_feeds">
+        Feeds will show here.
+
+
+        <a class="twitter-timeline"  href="https://twitter.com/LoveThatFit"  data-widget-id="359640645129867264">
+            Tweets by @LoveThatFit</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </div>
+    <div id="social_box">
+        <div><img src="{{ asset('bundles/lovethatfit/site/images/fb_icon.png') }}" width="33" height="34"></div>
+        <div><img src="{{ asset('bundles/lovethatfit/site/images/tt_icon.png') }}" width="33" height="34"></div>
+    </div>
+
+</div>
+{% endblock %}
+{% block how_it_works_content %}
+            {% include 'LoveThatFitUserBundle::howItWorks.html.twig'%}
+{% endblock %}
+
+
+
+

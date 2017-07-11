@@ -1,0 +1,64 @@
+security:
+    encoders:
+      Symfony\Component\Security\Core\User\User:
+           algorithm:   sha1
+           iterations: 1
+           encode_as_base64: false
+      
+      LoveThatFit\UserBundle\Entity\User:
+            algorithm:   sha1
+            iterations: 1
+            encode_as_base64: false
+            
+      
+    firewalls:
+        secured_area:
+            pattern:    ^/
+            anonymous: ~
+            form_login:
+                login_path:  /login
+                check_path:  /login_check
+                username_parameter: _username
+                password_parameter: _password
+                
+            logout:
+               path:   /logout
+               target: /login
+               success_handler: authentication_handler
+            #http_basic:
+                #realm: "Secured Demo Area"
+
+    access_control:
+        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /admin/, roles: ROLE_ADMIN }
+        - { path: /admin, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        - { path: ^/registration/step_one, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /email/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        - { path: /registration/user/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        - { path: /registration/, roles: ROLE_USER }        
+        - { path: /profile/, roles: ROLE_USER }        
+        - { path: /registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }        
+        - { path: /inner_site, roles: ROLE_USER }
+        - { path: /ajax, roles: ROLE_USER }
+        
+
+    providers:
+        chain_provider:
+            chain:
+                providers: [in_memory, user_db]
+        in_memory:
+            memory:
+                users:
+                    waq:  { password: 5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8, roles: 'ROLE_ADMIN' }
+                    admin: { password: d033e22ae348aeb5660fc2140aec35850c4da997, roles: 'ROLE_ADMIN' }
+        user_db:                      
+            entity: { class: LoveThatFit\UserBundle\Entity\User, property: email }
+            
+            
+
+    #encoders:
+        #
+        #Symfony\Component\Security\Core\User\User: plaintext
+        
+        

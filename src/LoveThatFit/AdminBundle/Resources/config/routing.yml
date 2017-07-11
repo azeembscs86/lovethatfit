@@ -1,0 +1,37 @@
+#-------------------------------------------------------------
+#-------------- ADMIN ------------------------
+#-------------------------------------------------------------
+
+admin_dashboard:
+    pattern:  /admin/dashboard
+    defaults: { _controller: LoveThatFitAdminBundle:Default:index}
+
+#-------------- PRODUCT ------------------------
+    
+admin_product_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/product.yml"
+    prefix:   /
+
+#-------------- BRAND ------------------------
+
+admin_brand_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/brand.yml"
+    prefix:   /
+
+    #-------------- CLOTHING TYPE ------------------------
+    
+admin_clothing_type_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/clothing_type.yml"
+    prefix:   /
+    
+admin_survey_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/survey.yml"
+    prefix:   /
+
+admin_sizechart_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/sizechart.yml"
+    prefix:   /
+
+admin_user_routes:
+    resource: "@LoveThatFitAdminBundle/Resources/config/routing/user.yml"
+    prefix:   /

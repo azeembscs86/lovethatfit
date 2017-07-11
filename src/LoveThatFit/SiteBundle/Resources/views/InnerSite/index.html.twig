@@ -1,0 +1,601 @@
+{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
+
+{% block left_navigation %}
+
+{% include 'LoveThatFitSiteBundle:InnerSite:_left_navigation.html.twig'%}
+
+{% endblock %}
+
+{% block left_col_btm %}
+{% endblock %}
+
+{% block product_slider %}
+{% if (app.user.measurement)%}
+<input id="hdn_prod_top_pos" type="hidden" value="{{ 77 + app.user.measurement.getShoulderHeight }}" />
+<input id="hdn_prod_bottom_pos" type="hidden" value="{{ 227 + app.user.measurement.getOutseam }}" />
+{% endif %}
+<section class="products">
+    
+    <div id="fitting_alerts">
+        <div class="arrow_img_alerts"></div>
+        <h2>Fitting Alerts</h2>
+        <div class="fitting_alerts_cnt">
+            <div id="curr_top_alerts"></div>
+            <div id="curr_bottom_alerts"></div>
+            <div id="curr_dress_alerts"></div>
+        <!--/.fitting_alerts_cnt--></div>
+    <!--/#fitting_alerts--></div>
+    
+    <div class="prod_slider_hldr">
+        <div class="slider_but_top click_able_top"></div>
+        <div class="prod_sliding_area">
+            <div class="int_fitting_room">
+                <div id="fitting_tab">
+                    <a href="{{ path('fitting_room_image_edit') }}">Upload New Photo</a>
+                    <a class="fitting_alert_link" href="#">Fitting Alerts</a>
+                </div>
+                <a href="{{ path('registration_step_four_edit') }}" class="edit_photo">Try another photo</a>
+                <div id="full_dropable" class="hide"></div>
+                <div id="top_dropable" class="hide"></div>
+                <div id="bottom_dropable" class="hide"></div>
+                
+                {% if app.user.image != null %}
+                <div id="user_dummy_img_hldr">
+                    <img class="user_dummy_img" src="{{ asset(app.user.getWebPath) }}">
+                </div>
+                {%else%}
+                    <div class="upload_pic_msg">Please <a href="{{ path('fitting_room_image_edit') }}">Upload Your Photo</a> to try cloths on you.</div>
+                    <div id="user_dummy_img_hldr">
+                    </div>
+                {% endif %}
+            </div> 
+            <div class="play_area_hldr hide">
+                <div id="play_area" class="play_area">
+                    <div id="top_layer"></div>
+                    <div id="dummy_mark"></div>
+                    <div id="uploaded_photo" class="full_opacity"></div>
+                </div>
+                <!--/.play_area_hldr--></div>
+
+          <div class="loading_now">
+              <div class="loading_inner">
+                  <img class="prod_top" src="{{ asset('bundles/lovethatfit/site/images/uploading.gif') }}">
+              </div>
+          </div>
+          <div id="slider_dis_canv">
+            
+            {% render 'LoveThatFitSiteBundle:InnerSite:productsLatest' with {'gender' : app.user.gender} %}
+            <!--.prod_sliding_area--></div>
+        <!---/#dis canv---></div>
+        <div class="slider_but_btm click_able_btm"></div>
+        <!--/.prod_slider_hldr--></div>
+</section>
+
+{% endblock %}
+
+{% block fitting_room %}
+<script>
+    
+//--Slider--//
+    
+function set_slider_buttons(){
+  if($("#slider_dis_canv").scrollTop() == 0){
+      $(".slider_but_top").removeClass("click_able_top").addClass("disable_me_top");
+      //alert("top_disabled now");
+  }
+  else {
+      $(".slider_but_top").removeClass("disable_me_top").addClass("click_able_top");
+  }
+  if($("#slider_dis_canv").scrollTop() >= $("#slider_dis_canv ul.prod_wrapper").height() - 500){
+      $(".slider_but_btm").removeClass("click_able_btm").addClass("disable_me_btm");
+      //alert("bottom_disabled now");
+  }
+  else {
+      $(".slider_but_btm").removeClass("disable_me_btm").addClass("click_able_btm");
+  }
+}
+
+function set_droppables(){
+    var top_pos_drop = $("#hdn_prod_top_pos").attr("value");
+    $("#top_dropable").css("top", top_pos_drop - 28 + "px");
+    
+    var bottom_pos_drop = $("#hdn_prod_bottom_pos").attr("value");
+    $("#bottom_dropable").css({top: bottom_pos_drop + "px"});
+    
+    var dress_pos_drop = $("#hdn_prod_top_pos").attr("value");
+    $("#full_dropable").css({top: top_pos_drop - 28 + "px"});
+}
+$(document).ready(function(){
+  set_droppables();
+  set_slider_buttons();
+  set_drag_drop_ele();
+  ///--- Fitting Alert ---///
+              
+            $(".fitting_alert_link").toggle(
+                function () {
+                  $("#fitting_alerts").fadeIn(300);
+                },
+                function () {
+                  $("#fitting_alerts").fadeOut(300);
+                }
+              );
+
+});
+var scroll_heighting = 506;
+    $(".click_able_top").click(function (){
+        $("#slider_dis_canv").animate({"scrollTop" : "-=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
+        
+    });
+    $(".click_able_btm").click(function (){
+        $("#slider_dis_canv").animate({"scrollTop" : "+=" + scroll_heighting}, 1200, "swing", function (){set_slider_buttons();} );
+        
+    });
+    
+    
+    
+    
+    //---Function to check drag limit and set revert---//
+    
+    function product_drag_limit_check(prod_type){
+        var prod_axis = $(prod_type).offset();
+
+        if(prod_axis.left < $(prod_type).parent().offset().left - 30 || prod_axis.left > $(prod_type).parent().offset().left + 30 || prod_axis.top < $(prod_type).parent().offset().top - 30 || prod_axis.top > $(prod_type).parent().offset().top + 30){
+            $( prod_type ).draggable( "option", "revert", false );
+        }
+        else{
+            $( prod_type ).draggable( "option", "revert", true );
+        }
+    }
+    
+    function remove_alert_box(){
+        if($(".fitting_alerts_cnt ul") != true)
+            {
+                $("#fitting_alerts").fadeOut();
+            }
+    }
+    function remove_fitting_alerts(prod_type){
+        if($( prod_type ).parent().attr('id') == "top_dropable")
+            {
+                $("#curr_top_alerts ul").fadeOut();
+                $("#curr_top_alerts h3").fadeOut();
+            }
+        if($( prod_type ).parent().attr('id') == "bottom_dropable")
+            {
+                $("#curr_bottom_alerts ul").fadeOut();
+                $("#curr_bottom_alerts h3").fadeOut();
+            }
+        if($( prod_type ).parent().attr('id') == "full_dropable")
+            {
+                $("#curr_dress_alerts ul").fadeOut();
+                $("#curr_dress_alerts h3").fadeOut();
+            }
+            
+    };
+    
+    //---Function to check position and remove applied product---//
+    function remove_product_applied (prod_type){
+        //alert($( prod_type ).css("left"));
+        if($( prod_type ).css("left") != "0px" || $( prod_type ).css("top") != "0px" ){
+            $( prod_type).fadeOut(300, function (){$(prod_type).parent().addClass("hide").css("display","none")});
+            remove_fitting_alerts(prod_type);
+        }
+    }
+    
+    
+    function set_drag_drop_ele(){
+    
+    
+    
+    $( ".prod_wrapper li .prod_node .prod_top" ).draggable({ revert: "invalid", helper: "clone",
+        start:function (){
+            $(".int_fitting_room").zIndex("-10");
+            $("#fitting_alerts").zIndex("-8");
+            
+            var prod_h = 160;
+            var prod_w = 264;
+            var left_pos_drop = 182;
+            
+            
+            //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
+            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+        
+        
+        
+        
+        $( "#top_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 2))});
+           
+        },
+        drag:function(){
+        },
+        stop:function (){
+            //alert($('.ui-draggable-dragging')._parent());
+            $( "#top_dropable").removeClass("top_active");
+            $(".int_fitting_room").zIndex("0");
+            $("#fitting_alerts").zIndex("1");
+        }
+    });
+    
+
+    
+    
+    
+    /// Dropable ///
+    $( "#top_dropable" ).droppable({
+        accept: ".prod_wrapper li .prod_node .prod_top",
+        activeClass: "ui-state-hover",
+        hoverClass: "ui-state-active",
+        drop: function( event, ui ) {
+            
+            
+            
+            var my_curr_prod = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
+            //alert(my_ccc);
+            $(".ui-draggable-dragging").parent().parent().find("a.prod_details_arrow").trigger('click');
+            
+            
+            $.ajax({
+                url: my_curr_prod,
+                cache: false,
+                success: function(curr_prod_alerts){
+                    $("#curr_top_alerts").html(curr_prod_alerts).parent().parent().fadeIn();
+                }
+            });            
+            
+            var my_curr_prod_apply = $(".ui-draggable-dragging").parent().find("a.apply_img").attr("href");
+            
+            $(this).fadeOut(300, function (){
+                    //var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
+                    //apply_prod = apply_prod + "_apply.png";
+                    //$(this).html("<img class='curr_prod' src='{{ asset('bundles/lovethatfit/site/products/tops/') }}"+apply_prod+"' />").fadeIn(300);
+                    
+                    $("#top_dropable").html("<img class='curr_prod' src='" + my_curr_prod_apply + "' />").fadeIn();
+                    
+
+                    $("#"+this.id+" img").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            product_drag_limit_check(this);
+                        },
+                        stop: function() {
+                            remove_product_applied(this);
+                           
+                        }
+                    });
+                    
+                    
+                });
+            
+            //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
+ 
+    }
+    });
+    
+    
+    $( ".prod_wrapper li .prod_node .featured_img .prod_bottom" ).draggable({ revert: "invalid", helper: "clone",
+        start:function (){
+            
+            var prod_h = 200;
+            var prod_w = 264;
+            var left_pos_drop = 182;
+            
+            //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
+            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+            $(".int_fitting_room").zIndex("-1");
+            $("#fitting_alerts").zIndex("-8");
+            
+        $( "#bottom_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 2))});
+            
+        },
+        drag:function(){
+        },
+        stop:function (){
+            $( "#bottom_dropable").removeClass("top_active");
+            $(".int_fitting_room").zIndex("0");
+            $("#fitting_alerts").zIndex("1");
+        }
+    });
+    
+    /// Dropable ///
+    $( "#bottom_dropable" ).droppable({
+        accept: ".prod_wrapper li .prod_node .featured_img .prod_bottom",
+        activeClass: "ui-state-hover",
+        hoverClass: "ui-state-active",
+        drop: function( event, ui ) {
+            
+            var my_curr_prod = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
+            //alert(my_curr_prod);
+            
+            $(".ui-draggable-dragging").parent().parent().find("a.prod_details_arrow").trigger('click');
+            
+            
+            $.ajax({
+                url: my_curr_prod,
+                cache: false,
+                success: function(curr_prod_alerts){
+                    $("#curr_bottom_alerts").html(curr_prod_alerts).parent().parent().fadeIn();
+                }
+            });
+            
+            
+            var my_curr_prod_apply = $(".ui-draggable-dragging").parent().find("a.apply_img").attr("href");
+            $(this).fadeOut(300, function (){
+                
+                    
+                
+                    //var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
+                    //apply_prod = apply_prod + "_apply.png";
+                    //$(this).html("<img class='curr_prod' src='{{ asset('bundles/lovethatfit/site/products/bottoms/') }}"+apply_prod+"' />").fadeIn(300);
+                
+                    
+                    $("#bottom_dropable").html("<img class='curr_prod' src='" + my_curr_prod_apply + "' />").fadeIn();
+                
+                $("#"+this.id+" img").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            product_drag_limit_check(this);
+                        },
+                        stop: function() {
+                            remove_product_applied(this);
+                           
+                        }
+                    });
+                
+               }); 
+            //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
+     }
+    });
+    
+    
+    $( ".prod_wrapper li .prod_node .featured_img .prod_dress" ).draggable({ revert: "invalid", helper: "clone",
+        start:function (){
+            
+            var prod_h = 300;
+            var prod_w = 264;
+            var left_pos_drop = 182;
+            
+            //var prod_h = $(this).parent().find(".prod_details .prod_height").attr("value");
+            //var prod_w = $(this).parent().find(".prod_details .prod_width").attr("value");
+            $(".int_fitting_room").zIndex("-1");
+            $("#fitting_alerts").zIndex("-8");
+            
+        $( "#full_dropable").removeClass("hide").css("display","block").addClass("top_active").css({height: prod_h, width: prod_w, left: (left_pos_drop - (prod_w / 2))});
+            
+        },
+        drag:function(){
+        },
+        stop:function (){
+            
+            var my_ccc = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
+            //alert(my_ccc);
+            $( "#full_dropable").removeClass("top_active");
+            $(".int_fitting_room").zIndex("0");
+            $("#fitting_alerts").zIndex("1");
+        }
+    });
+    
+    /// Dropable ///
+    $( "#full_dropable" ).droppable({
+        accept: ".prod_wrapper li .prod_node .featured_img .prod_dress",
+        activeClass: "ui-state-hover",
+        hoverClass: "ui-state-active",
+        drop: function( event, ui ) {
+            var my_curr_prod = $(".ui-draggable-dragging").parent().find(".prod_fitting_details a").attr("href");
+            //alert(my_ccc);
+            
+            $(".ui-draggable-dragging").parent().parent().find("a.prod_details_arrow").trigger('click');
+            
+            $.ajax({
+                url: my_curr_prod,
+                cache: false,
+                success: function(curr_prod_alerts){
+                    $("#curr_dress_alerts").html(curr_prod_alerts).parent().parent().fadeIn();
+                }
+            });
+            
+            
+            var my_curr_prod_apply = $(".ui-draggable-dragging").parent().find("a.apply_img").attr("href");
+            
+            $(this).fadeOut(300, function (){
+                    //var apply_prod = ui.draggable.attr("src").match(/(\w*)\.\w{3,4}$/)[1];
+                    //apply_prod = apply_prod + "_apply.png";
+                    //$(this).html("<img class='curr_prod' src='{{ asset('bundles/lovethatfit/site/products/dress/') }}"+apply_prod+"' />").fadeIn(300);
+                    
+                    
+                    $("#full_dropable").html("<img class='curr_prod' src='" + my_curr_prod_apply + "' />").fadeIn();
+                    
+                    
+                    $("#"+this.id+" img").draggable({
+                        start: function(){
+                        },
+                        drag: function(){
+                            product_drag_limit_check(this);
+                        },
+                        stop: function() {
+                            remove_product_applied(this);
+                        }
+                    });
+                });
+                
+                
+                
+                
+                
+            //alert($(this).find("img").attr("src").match(/(\w*)\.\w{3,4}$/)[1]);
+ 
+    }
+    });
+    
+    
+    
+    
+    }
+    
+    </script>
+    
+   
+    <div class="pro_cart">
+    
+    
+    <nav>
+    <ul>
+        
+        <li ><a href="#"><span></span>Applied Items<span class="mnu"></span></a>
+            
+            
+            <ul style="display: block;" id="fchld">
+                  <li>
+                       <span class="cross_icon"></span>
+                  
+                       <a href="">Cardigan</a>
+                       <span class="cart_item_price">$39.95</span>
+                       <span class="arw"></span>
+                    </li>
+                    
+                    <li>
+                       <span class="cross_icon"></span>
+            
+                       <a href="#_">Cardigan</a>
+                       <span class="cart_item_price">$39.95</span>
+                       <span class="arw"></span>
+                    </li>
+                    
+                    <li>
+                       <span class="cross_icon"></span>
+                     
+                       <a href="#_">Cardigan</a>
+                       <span class="cart_item_price">$39.95</span>
+                       <span class="arw"></span>
+                    </li>
+                    
+                    <div id="total_cart">
+                <span>Total<span>
+                        <span id="totalamount">$1334</span> 
+            </div>
+                    </ul>
+            
+            
+            
+            
+            
+            </li>
+          <!-- <li><a href="#"><span></span>Twitter Notes<span class="mnu"></span></a>
+                    
+                <ul style="display: block;">
+
+                  <li style="padding:0px;">
+                    <a class="twitter-timeline"  href="https://twitter.com/LoveThatFit"  data-widget-id="308997517008306176">Tweets by @LoveThatFit</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+
+ 
+                    </li> 
+
+                    </ul>
+                
+                
+                </li>
+            <li><a href="#"><span></span>Facebook Updates<span class="mnu"></span></a>
+                   
+                   <ul style="display: block;">
+                  <li>
+                    {% include 'LoveThatFitSiteBundle::InnerSite/_facebookpage.html.twig'%}  
+                    </li> 
+                    </ul>  
+                    
+                    
+                </li>-->
+         
+         
+         
+         
+            </ul>
+     </nav>
+    
+    </div>
+    
+    
+    <script>
+    $(document).ready(function(){
+
+////////// To apply active class on current list item /////////
+
+//var chk_active_url = $(".left_column nav ul li ul a").attr("href");
+        //var curr_url = window.location.pathname;
+        
+       // if(chk_active_url == curr_url){
+       //     alert("asdf");
+        //}
+
+        $(".pro_cart nav ul li ul").parent().addClass("sub_menu");
+        $(".pro_cart nav ul li ul").css("display","none");
+        
+        $("#fchld").css("display","block");
+        
+        $(".pro_cart nav ul li").css("display","block");
+        $(".pro_cart nav > ul > li > a").click(function (){
+            
+            $(".pro_cart nav ul li ul").slideUp().parent().removeClass("opn_link");
+             
+            var chk_curr_ele = $(this).parent().find("ul").css("display");
+            if(chk_curr_ele == "none" ){
+                $(this).parent().find("ul").slideDown().parent().addClass("opn_link");
+                //$(this).parent().find("span").removeClass("mnu");
+               // $(this).parent().find("span").addClass("opn_link");
+               
+            }
+        });
+        
+        $(".pro_cart nav ul li a").click(
+            function (){
+                if($(this).parent().hasClass("sub_menu")){
+                    return false;
+                }
+                else {
+                    
+                    
+                    var clicked_url = $(this).attr("href");
+                    //alert(clicked_url);
+                        $(".pro_cart nav ul li a").parent().removeClass("active");
+                        $(this).parent().addClass("active");
+                        
+                        $(".loading_now").fadeIn(100);
+                        
+                        $.ajax({
+                        url: clicked_url,
+                        cache: false,
+                        success: function(html){
+                        $("#slider_dis_canv").html(html).animate({scrollTop : "0px"}, 200, "swing", function (){set_drag_drop_ele();set_slider_buttons();$(".loading_now").fadeOut(100);});
+                        //$("#slider_dis_canv ul").remove();
+                          
+                          
+                          
+                        }
+                      });
+                    
+                    
+                    
+                    
+                    return false;
+                }
+                
+            }
+        );
+        
+    });
+    
+    
+   //script for redirection to login page incase if the session timed out 
+   //-----------------------------------------------------------------------------
+    $(document).ready(function() {
+    $(document).ajaxError(function (event, jqXHR) {
+        if (403 === jqXHR.status) {
+            window.location.reload();
+        }
+    });
+});
+</script>
+
+ 
+{% endblock %} 

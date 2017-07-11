@@ -1,0 +1,113 @@
+anonymous_user_home:
+    pattern:  /home
+    defaults: { _controller: LoveThatFitUserBundle:Registration:registration}
+
+inner_site_home:
+    pattern:  /inner_site/home
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:home}
+
+inner_site_index:
+    pattern:  /inner_site/index
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:index}
+
+about_us:
+    pattern:  /about_us
+    defaults: { _controller: LoveThatFitSiteBundle:Home:aboutUs}
+
+contact_us:
+    pattern:  /contact_us
+    defaults: { _controller: LoveThatFitSiteBundle:Home:contactUs}
+    
+ajax_brand_list:
+    pattern:  /ajax/brands
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:brands}
+
+ajax_clothing_type_list:
+    pattern:  /ajax/clothing_types
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:clothingTypes}    
+    
+ajax_product_detail:
+    pattern:  /ajax/product/{id}/{product_color_id}/{product_size_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productDetail, product_color_id: null, product_size_id: null}
+
+ajax_product_base_url:
+    pattern:  /ajax/product/
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productDetail, id: null, product_color_id: null, product_size_id: null}
+    
+ajax_user_product_item_create:
+    pattern:  /ajax/user_product_item/create/{product_item_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:addToCloest}
+    
+ajax_products_by_my_closet:
+    pattern:  /ajax/products/my_closet
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByMyCloset, page_number: 0, limit: 0}
+
+ajax_my_closet_delete:
+    pattern:  /ajax/products/my_closet/delete/{id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:deleteMyCloset}  
+
+ajax_my_closet_count:
+    pattern:  /ajax/products/my_closet/count
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:countMyColoset}
+
+ajax_product_latest:
+    pattern:  /ajax/products/{gender}/latest/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsLatest, page_number: 0, limit: 0}
+
+ajax_product_hotest:
+    pattern:  /ajax/products/{gender}/hotest/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsHotest, page_number: 0, limit: 0}
+
+ajax_product_by_brand:
+    pattern:  /ajax/products/{gender}/brand/{brand_id}/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByBrand, page_number: 0, limit: 0}
+
+ajax_product_by_clothing_type:
+    pattern:  /ajax/products/{gender}/type/{clothing_type_id}/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsByClothingType, page_number: 0, limit: 0}
+
+ajax_product_history:
+    pattern:  /ajax/products
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsTryHistory}
+    
+ajax_product_type:
+    pattern:  /ajax/products/{gender}/type
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:productsClothingType}
+
+ajax_product_list:
+    pattern:  /ajax/products/{gender}/{page_number}/{limit}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:products, page_number: 0, limit: 0}
+
+
+ajax_fitting_feedback_json:
+    pattern:  /ajax/fitting_feedback_json/{user_id}/{product_item_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFeedBackJSON}
+
+ajax_fitting_feedback_list:
+    pattern:  /ajax/fitting_feedback_list/{product_item_id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:getFeedBackList}
+    
+ajax_product_ajax:
+    pattern:  /ajax
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:ajax}
+    
+email:
+    pattern:  /email/{id}
+    defaults: { _controller: LoveThatFitSiteBundle:InnerSite:email, id:0}
+    
+ajax_cart:
+    pattern:  /ajax/cart
+    defaults: { _controller: LoveThatFitSiteBundle:Cart:index}    
+    
+ajax_cart_add:
+    pattern:  /ajax/cart/add/{id}
+    defaults: { _controller: LoveThatFitSiteBundle:Cart:addToCart}    
+
+ajax_cart_remove:
+    pattern:  /ajax/cart/remove/{id}
+    defaults: { _controller: LoveThatFitSiteBundle:Cart:removeFromCart}   
+    
+email_registration:
+    pattern:  /email/registration/{id}
+    defaults: { _controller: LoveThatFitSiteBundle:Home:emailRegistration}    
+    

@@ -1,0 +1,88 @@
+waist: 
+  tight:	'tight'
+  loose:	'loose'
+  fit: 'Exact fit'
+  user_na: 'Not provided by User!'
+  item_na: 'Not available!'
+  np: 'Measurements not available!'
+  
+hip:
+  tight:	'tight'
+  loose:	'loose'
+  fit:  'fits'
+  user_na: 'Not provided by User!'
+  item_na: 'Not available!'
+  np: 'Measurements not available!'
+  
+bust:
+  tight:	'tight'
+  loose:	'loose'
+  fit: 'Exact fit'
+  user_na: 'Not provided by User!'
+  item_na: 'Not available!'
+  np: 'Measurements not available!'
+  
+arm:
+  tight:	'tight'
+  loose:	'loose'
+  fit: 'Exact fit'
+  user_na: 'Not provided by User!'
+  item_na: 'Not available!'
+  np: 'Measurements not available!'
+  
+inseam:
+  tight:	'tight'
+  loose:	'loose'
+  fit: 'Exact fit'  
+  user_na: 'Not provided by User!'
+  item_na: 'Not available!'
+  np: 'Measurements not available!'
+  
+outseam:
+  tight:	'tight'
+  loose:	'loose'
+  fit: 'Out seam: Exact fit'  
+  user_na: 'Not provided by User!'
+  item_na: 'Not available!'
+  np: 'Measurements not available!'
+  
+back:
+  tight:	'tight'
+  loose:	'loose'
+  fit: 'Exact fit'
+  user_na: 'Not provided by User!'
+  item_na: 'Not available!'
+  lower:	'wrong size, Try a size up'
+  np: 'Measurements not available!'
+  
+length:
+  tight:	'tight'
+  loose:	'loose'
+  fit: 'Exact fit'
+  user_na: 'Not provided by User!'
+  item_na: 'Not available!'
+  np: 'Measurements not available!'
+  
+chest:
+  tight:	'tight'
+  loose:	'loose' 
+  fit: 'Exact fit'
+  user_na: 'Not provided by User!'
+  item_na: 'Not available!'
+  np: 'Measurements not available!'
+
+neck:
+  tight:	'tight'
+  loose:	'loose' 
+  fit: 'Exact fit'  
+  user_na: 'Not provided by User!'
+  item_na: 'Not available!'
+  np: 'Measurements not available!'
+  
+sleeve:
+  tight:	'tight'
+  loose:	'loose' 
+  fit: 'Exact fit'
+  user_na: 'Not provided by User!'
+  item_na: 'Not available!'
+  np: 'Measurements not available!'

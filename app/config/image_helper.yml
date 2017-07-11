@@ -1,0 +1,53 @@
+image_category:
+
+  brand:
+    original:
+      prefix: 
+      dir:  'uploads/ltf/brands'
+
+    icon:
+      height: 40
+      width: 35
+      prefix:  
+      dir:  'uploads/ltf/brands/icon'
+    
+    logo:
+      height: 80
+      width: 205
+      prefix:  
+      dir:  'uploads/ltf/brands/logo'  
+
+  product:
+
+    original:
+      prefix: 
+      dir:  'uploads/ltf/products'
+
+    icon:
+      height: 40
+      width: 35
+      prefix:  
+      dir:  'uploads/ltf/products/list'
+
+    small:
+      height: 110
+      width: 85
+      prefix:  
+      dir:  'uploads/ltf/products/small'
+
+    large:
+      height: 240
+      width: 200
+      prefix:   			
+      dir:  'uploads/ltf/products/large'
+  
+  user:
+    original:
+      prefix: 
+      dir:  'uploads/ltf/users'
+      
+    profile:
+      prefix: 
+      height: 250
+      width: 220
+      dir:  'uploads/ltf/users'

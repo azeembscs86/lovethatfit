@@ -1,0 +1,18 @@
+<script type="text/javascript" src="{{ asset('bundles/lovethatfit/site/js/facio.min.js') }}"></script>
+ <script type="text/javascript">
+	var pageUrl = "http://www.facebook.com/LoveThatFit?ref=ts&fref=ts";
+	var facioWidgetWidth = 200; 
+	var facioWidgetHeight = 400; 
+	
+		function displayFacio() {
+			$('#facio').empty().append(' loading ...');
+			pageUrl=$('#pageUrl').val();
+			//alert(blogUrl);
+			
+			onLoadFacio();
+		}
+
+	
+	</script>
+       
+         <div id="facio"> </div>	

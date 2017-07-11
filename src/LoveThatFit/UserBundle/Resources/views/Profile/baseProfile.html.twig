@@ -1,0 +1,32 @@
+{% extends 'LoveThatFitSiteBundle::base.html.twig' %}
+
+{% block left_navigation %}
+        {% include 'LoveThatFitUserBundle:Profile:_left_navigation.html.twig'%}
+{% endblock %}
+
+{% block left_col_btm %}
+
+{% endblock %}
+
+{% block product_slider %}
+ 
+
+<div id="profile_wrapper">
+    <div id="fitting_link"><a href="{{path('inner_site_index')}}">< Back to Fitting Room</a></div>
+    {% block profile_heading %}
+        {% endblock %}
+    
+<div class="top_gra"></div>
+<div class="pro_content">
+    {% block profile_section %}
+        {% endblock %}
+</div>
+<div class="bottom_gra"></div>
+</div>
+
+{% endblock %}
+
+{% block fitting_room %}
+
+
+{% endblock %} 
